@@ -12,7 +12,7 @@ const AddFood = () => {
             <Header />
             <View style={styles.addFood}>
                 <View style={styles.legendContainer}>
-                    <Text style={styles.addFoodLegend}>Añadir Comida</Text>
+                    <Text style={styles.addFoodLegend}>Añadir comida</Text>
                 </View>
                 <View style={styles.addFoodBtnContainer}>
                 <Button
@@ -45,9 +45,10 @@ const styles = StyleSheet.create({
     },
     addFoodBtnContainer:{
         flex: 0,
-        width: 55,
+        width: 60,
         alignItems: 'flex-end',
-        marginTop: 90,
+        justifyContent: 'center',
+        marginTop: 88,
     },
     addFood: {
         flexDirection: 'row',

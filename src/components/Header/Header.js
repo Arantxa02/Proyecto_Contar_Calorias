@@ -1,5 +1,8 @@
 import react from 'react'
 import {View, StyleSheet, Text, Image} from 'react-native'
+import { useNavigation } from '@react-navigation/native';
+import { Button } from '@rneui/themed'
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const staticInfo = {
   name: 'Arantxa Medina Santana',
@@ -7,9 +10,19 @@ const staticInfo = {
 }
 
 const Header = () => {
+  const {canGoBack, goBack} = useNavigation();
 
   return(
     <View style={styles.container}>
+      {canGoBack() ? (
+        <View style={styles.arrowContainer}>
+            <Button icon={<Icon name="arrow-back" size={24} />}
+            radius= "lg"
+            color="#9933FF" 
+            onPress={() => goBack()}
+            />
+        </View>
+      ): undefined}
     <View style={styles.rightContainer}>
       <Image source={{uri: staticInfo.uri}} style={styles.profileImage}/>
     </View>
@@ -25,25 +38,26 @@ const Header = () => {
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        top: 40,
+        top: 20,
         left: 2,
         right: 2,
         flexDirection: 'row',
         alignContent: 'center', 
         paddingHorizontal: 10,
-        marginTop: 20,
+        marginTop: 25,
     },
     leftContainer: {
-        flex: 1,
+        flex:  1,
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        marginLeft: 10,
+        marginLeft: 20,
     },
     rightContainer: {
         flex: 0,
-        width: 40,
+        width: 45,
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
+        marginLeft: 15,
     },
     name: {
         fontWeight: 'bold',
@@ -51,12 +65,19 @@ const styles = StyleSheet.create({
     },
     subtitle: {
         fontSize: 15,
-        color: '#808080'
+        color: '#808080',
     },
     profileImage: {
         width: 50,
         height: 50,
         borderRadius: 24,
+    },
+    arrowContainer:{
+      flex: 0,
+        width: 55,
+        alignItems: 'flex-end',
+        marginTop: 5,
+
     },
 });
 
