@@ -16,69 +16,70 @@ const Header = () => {
     <View style={styles.container}>
       {canGoBack() ? (
         <View style={styles.arrowContainer}>
-            <Button icon={<Icon name="arrow-back" size={24} />}
+            <Button icon={<Icon name="arrow-back" size={25} />}
             radius= "lg"
-            color="#9933FF" 
+            color="#9933FF"
             onPress={() => goBack()}
-            />
+            containerStyle={{ padding: 10, borderRadius: 20 }}
+          />
         </View>
       ): undefined}
-    <View style={styles.rightContainer}>
+      <View style={styles.rightContainer}>
       <Image source={{uri: staticInfo.uri}} style={styles.profileImage}/>
-    </View>
-    <View style={styles.leftContainer}>
-      <Text style={styles.name}>{`Hola ${staticInfo.name}`}</Text>
-      <Text style={styles.subtitle}>Bienvenida de nuevo!</Text>
-    </View>
+      </View>
+      <View style={styles.leftContainer}>
+        <Text style={styles.name}>{`Hola ${staticInfo.name}`}</Text>
+        <Text style={styles.subtitle}>Bienvenida de nuevo!</Text>
+      </View>
     </View>
 
 
   )
 }
 const styles = StyleSheet.create({
-    container: {
-        position: 'absolute',
-        top: 20,
-        left: 2,
-        right: 2,
-        flexDirection: 'row',
-        alignContent: 'center', 
-        paddingHorizontal: 10,
-        marginTop: 25,
-    },
-    leftContainer: {
-        flex:  1,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        marginLeft: 20,
-    },
-    rightContainer: {
-        flex: 0,
-        width: 45,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        marginLeft: 15,
-    },
-    name: {
-        fontWeight: 'bold',
-        fontSize: 14,
-    },
-    subtitle: {
-        fontSize: 15,
-        color: '#808080',
-    },
-    profileImage: {
-        width: 50,
-        height: 50,
-        borderRadius: 24,
-    },
+  container: {
+    position: 'absolute',
+    top: 20,
+    left: 2,
+    right: 2,
+    flexDirection: 'row',
+    alignContent: 'center',
+    paddingHorizontal: 10,
+    marginTop: 25,
+  },
+  leftContainer: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    marginLeft: 20,
+  },
+  rightContainer: {
+    flex: 0,
+    width: 45,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    marginLeft: 15,
+  },
+  name: {
+    fontWeight: 'bold',
+    fontSize: 14,
+  },
+  subtitle: {
+    fontSize: 15,
+    color: '#808080',
+  },
+  profileImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 24,
+  },
     arrowContainer:{
-      flex: 0,
-        width: 55,
-        alignItems: 'flex-end',
-        marginTop: 5,
+    flex: 0,
+    width: 65,
+    alignItems: 'flex-end',
 
-    },
+
+  },
 });
 
 export default Header;

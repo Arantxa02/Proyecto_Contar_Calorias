@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Button, Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from 'react-native-elements'
@@ -15,19 +15,23 @@ const AddFood = () => {
                     <Text style={styles.addFoodLegend}>Añadir comida</Text>
                 </View>
                 <View style={styles.addFoodBtnContainer}>
-                <Button
-                    icon={<Icon name="add-circle" />}
-                    radius="lg"
-                    color="#9933FF"
+                    <Button
+                        icon={<Icon name="add-circle" />}
+                        radius="lg"
+                        color="#9933FF"
                     />
                 </View>
             </View>
             <View style={styles.searchContainer}>
                 <View style={styles.inputContainer}>
-                    <Input placeholder='manzana, carne, zumo...'/>
+                    <Input placeholder='manzana, carne, zumo...' />
                 </View>
-                <Button  color="#9933FF" icon={<Icon name="search"/>} />
-                
+                <Button
+                    containerStyle={styles.searchButtonContainer}
+                    buttonStyle={styles.searchButton}
+                    icon={<Icon name="search" />}
+                    color="#9933FF"
+                />
             </View>
         </View>
     );
@@ -37,13 +41,13 @@ const AddFood = () => {
 const styles = StyleSheet.create({
     container: {
         padding: 12,
-        flex:1,
+        flex: 1,
     },
     legendContainer: {
         flex: 1,
-         marginTop: 95,
+        marginTop: 120,
     },
-    addFoodBtnContainer:{
+    addFoodBtnContainer: {
         flex: 0,
         width: 60,
         alignItems: 'flex-end',
@@ -55,8 +59,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginVertical: 20,
     },
-     addFoodLegend:{
-        fontSize: 24,
+    addFoodLegend: {
+        fontSize: 22,
         fontWeight: 'bold',
         marginBottom: 17,
     },
@@ -64,11 +68,31 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 20,
-    },
-   inputContainer: {
+      },
+      
+      inputContainer: {
         flex: 1,
-        marginRight: 16,
-    },
+        marginRight: 20,
+      },
+      
+      searchButtonContainer: {
+        flex: 0,
+        width: 50,
+        height: 50,
+        borderRadius: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#9933FF',
+        borderWidth: 1,
+        borderColor: '#ddd',
+        marginTop: -25,
+      },
+      
+      searchButton: {
+        borderRadius: 20,
+        padding: 10,
+        backgroundColor: '#9933FF',
+      },
 });
 
 export default AddFood;
