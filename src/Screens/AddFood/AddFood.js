@@ -3,36 +3,49 @@ import { View, Text, StyleSheet} from 'react-native';
 import { Button, Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { Input } from 'react-native-elements'
+import {useState} from 'react';
 
 import Header from '../../components/Header/Header';
+import AddFoodModal from '../../components/AddFoodModal/AddFoodModal';
 
 const AddFood = () => {
+  const [visible, setIsVisible] = useState(false);
+  
+  const handleModalClose = () => {
+    setIsVisible(false);
+  };
+
     return (
         <View style={styles.container}>
             <Header />
             <View style={styles.addFood}>
                 <View style={styles.legendContainer}>
-                    <Text style={styles.addFoodLegend}>Añadir Comida</Text>
+                    <Text style={styles.addFoodLegend}>Añadir comida</Text>
                 </View>
                 <View style={styles.addFoodBtnContainer}>
                 <Button
                     icon={<Icon name="add-circle" />}
                     radius="lg"
                     color="#9933FF"
+                    onPress={() => setIsVisible(true)}
                     />
                 </View>
             </View>
             <View style={styles.searchContainer}>
                 <View style={styles.inputContainer}>
-                    <Input placeholder='manzana, carne, zumo...'/>
+                    <Input placeholder='manzana, carne, zumo...' />
                 </View>
-                <Button  color="#9933FF" icon={<Icon name="search"/>} />
-                
+                <Button
+                    containerStyle={styles.searchButtonContainer}
+                    buttonStyle={styles.searchButton}
+                    icon={<Icon name="search" />}
+                    color="#9933FF"
+                />
             </View>
+            <AddFoodModal  visible={visible} onClose={handleModalClose}/>
         </View>
     );
 };
-
 
 const styles = StyleSheet.create({
     container: {
@@ -41,21 +54,23 @@ const styles = StyleSheet.create({
     },
     legendContainer: {
         flex: 1,
-         marginTop: 95,
+        marginTop: 120,
     },
-    addFoodBtnContainer:{
+    addFoodBtnContainer: {
         flex: 0,
-        width: 55,
+        width: 60,
         alignItems: 'flex-end',
         marginTop: 90,
+        justifyContent: 'center',
+        marginTop: 88,
     },
     addFood: {
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: 20,
     },
-     addFoodLegend:{
-        fontSize: 24,
+    addFoodLegend: {
+        fontSize: 22,
         fontWeight: 'bold',
         marginBottom: 17,
     },
@@ -64,10 +79,29 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20,
     },
-   inputContainer: {
+      inputContainer: {
         flex: 1,
-        marginRight: 16,
-    },
+        marginRight: 20,
+      },
+
+      searchButtonContainer: {
+        flex: 0,
+        width: 50,
+        height: 50,
+        borderRadius: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#9933FF',
+        borderWidth: 1,
+        borderColor: '#ddd',
+        marginTop: -25,
+      },
+
+      searchButton: {
+        borderRadius: 20,
+        padding: 10,
+        backgroundColor: '#9933FF',
+      },
 });
 
 export default AddFood;

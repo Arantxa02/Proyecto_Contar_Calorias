@@ -1,14 +1,17 @@
-import React from 'react';
 import {  View } from 'react-native';
+import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context'
 
-import Home from './src/Screens/Home/Home';
+import Routes from './src/Routes/Routes'
 
-export default function App() {
+
+ function App(){
   return (
-    <View>
-      <Home/>
-    </View>
+    <SafeAreaProvider>
+      <SafeAreaView style={{flex: 1}}>
+      <Routes/>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
-
+export default App;
