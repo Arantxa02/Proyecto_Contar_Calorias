@@ -1,5 +1,5 @@
 import react from 'react'
-import {View, StyleSheet, Text, Image} from 'react-native'
+import { View, StyleSheet, Text, Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '@rneui/themed'
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -10,22 +10,22 @@ const staticInfo = {
 }
 
 const Header = () => {
-  const {canGoBack, goBack} = useNavigation();
+  const { canGoBack, goBack } = useNavigation();
 
-  return(
+  return (
     <View style={styles.container}>
       {canGoBack() ? (
         <View style={styles.arrowContainer}>
-            <Button icon={<Icon name="arrow-back" size={25} />}
-            radius= "lg"
+          <Button icon={<Icon name="arrow-back" size={25} />}
+            radius="lg"
             color="#9933FF"
             onPress={() => goBack()}
             containerStyle={{ padding: 10, borderRadius: 20 }}
           />
         </View>
-      ): undefined}
+      ) : undefined}
       <View style={styles.rightContainer}>
-      <Image source={{uri: staticInfo.uri}} style={styles.profileImage}/>
+        <Image source={{ uri: staticInfo.uri }} style={styles.profileImage} />
       </View>
       <View style={styles.leftContainer}>
         <Text style={styles.name}>{`Hola ${staticInfo.name}`}</Text>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 24,
   },
-    arrowContainer:{
+  arrowContainer: {
     flex: 0,
     width: 65,
     alignItems: 'flex-end',
