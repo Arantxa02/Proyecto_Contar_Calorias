@@ -1,4 +1,4 @@
-import React, {FC, useState, useEffect} from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { Modal, View, StyleSheet, Text, } from 'react-native';
 import { Button } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -14,7 +14,7 @@ const AddFoodModal: FC<AddFoodModalProps> = ({ onClose, visible }) => {
   const [calorias, setCalories] = useState('');
   const [nombre, setName] = useState('');
   const [gramos, setPortion] = useState('');
-  const {onSaveFood} = useFoodStorage();
+  const { onSaveFood } = useFoodStorage();
 
   useEffect(() => {
     setCalories('');
@@ -23,7 +23,7 @@ const AddFoodModal: FC<AddFoodModalProps> = ({ onClose, visible }) => {
   }, [visible]);
 
   const handleAddPress = async () => {
-    try{
+    try {
       await onSaveFood({
         calorias,
         nombre,
@@ -31,7 +31,7 @@ const AddFoodModal: FC<AddFoodModalProps> = ({ onClose, visible }) => {
       });
 
       onClose(true);
-    }catch (error){
+    } catch (error) {
       console.error(error);
     }
     onClose();
@@ -89,7 +89,7 @@ const AddFoodModal: FC<AddFoodModalProps> = ({ onClose, visible }) => {
                 radius="lg"
                 color="#9933FF"
                 onPress={handleAddPress}
-                disabled= {calorias.trim() === '' || nombre.trim() === '' || gramos.trim() === ''}
+                disabled={calorias.trim() === '' || nombre.trim() === '' || gramos.trim() === ''}
               />
             </View>
           </View>

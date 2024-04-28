@@ -9,11 +9,13 @@ import Header from '../../components/Header/Header';
 import AddFoodModal from '../../components/AddFoodModal/AddFoodModal';
 import useFoodStorage from '../../hooks/useFoodStorage';
 import MealItem from '../../components/MealItem/MealItem';
+import { Meal } from '../../types';
 
 const AddFood = () => {
     const [visible, setIsVisible] = useState(false);
     const [foods, setFoods] = useState([]);
     const { onGetFood } = useFoodStorage();
+    const [search, setSearch] = useState('');
 
     const loadFoods = async () => {
         try {
@@ -37,6 +39,18 @@ const AddFood = () => {
         setIsVisible(false);
     };
 
+    const handleSearchPress = async () => {
+        try {
+            const result = await onGetFood();
+            setFoods(result.filter((item: Meal) => item.nombre.toLocaleLowerCase().includes(search.toLocaleLowerCase()),
+            ));
+        } catch (error) {
+            console.error(error);
+            setFoods([]);
+        }
+    };
+
+
     return (
         <View style={styles.container}>
             <Header />
@@ -55,13 +69,17 @@ const AddFood = () => {
             </View>
             <View style={styles.searchContainer}>
                 <View style={styles.inputContainer}>
-                    <Input placeholder='manzana, carne, zumo...' />
+                    <Input
+                        placeholder='manzana, carne, zumo...'
+                        value={search}
+                        onChangeText={(text: string) => setSearch(text)} />
                 </View>
                 <Button
                     containerStyle={styles.searchButtonContainer}
                     buttonStyle={styles.searchButton}
                     icon={<Icon name="search" />}
                     color="#9933FF"
+                    onPress={handleSearchPress}
                 />
             </View>
             <ScrollView style={styles.content}>
@@ -78,8 +96,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
-    content:{
-        
+    content: {
+
     },
     legendContainer: {
         flex: 1,
