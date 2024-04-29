@@ -11,7 +11,6 @@ import { Alert } from "react-native";
 const MealItem: FC<Meal> = ({ calorias, nombre, gramos }) => {
     const { onSaveTodayFood } = useFoodStorage();
 
-
     const handleAddItemPress = async () => {
         try {
             await onSaveTodayFood({
@@ -19,47 +18,49 @@ const MealItem: FC<Meal> = ({ calorias, nombre, gramos }) => {
                 calorias,
                 gramos
             });
-            Alert.alert("Comida del día agregada correctamente");
+            Alert.alert(`"${nombre}" se añadio correctamente con ${calorias}Kcal y ${gramos}gr.`);
         } catch (error) {
             console.error(error);
-            Alert.alert("Comida del día no agregada ");
+            Alert.alert("Comida del día no agregada. Por favor, inténtalo de nuevo.");
         }
     }
+
     return (
-        <View style={styles.conatiner}>
-            <View style={styles.leftconatiner}>
+        <View style={styles.container}>
+            <View style={styles.leftContainer}>
                 <Text style={styles.nombre}>{nombre}</Text>
                 <Text style={styles.gramos}>{gramos}gr</Text>
             </View>
-            <View style={styles.rightconatiner}>
-                <Button icon={<Icon name="add-circle-outline" size={25} />}
-                    type="clear"
-                    onPress={handleAddItemPress}
-                />
-                <Text style={styles.calorias}>{calorias} Kcal </Text>
+            <View style={styles.rightContainer}>
+                <View style={styles.buttonContainer}>
+                    <Text style={styles.calorias}>{calorias} Kcal</Text>
+                    <Button icon={<Icon name="add-circle-outline" size={30} />}
+                        type="clear"
+                        onPress={handleAddItemPress}
+                    />
+                </View>
             </View>
-
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    conatiner: {
-        backgroundColor: '#d2a5f7',
+    container: {
+        backgroundColor: '#ebd6ff',
         borderRadius: 12,
         padding: 15,
         marginBottom: 10,
         flexDirection: 'row',
+        alignItems: 'center',
     },
-    leftconatiner: {
+    leftContainer: {
         flex: 1,
         justifyContent: 'center',
-
     },
-    rightconatiner: {
+    rightContainer: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'flex-end',
+        alignItems: 'center',
     },
     nombre: {
         fontSize: 20,
@@ -73,6 +74,11 @@ const styles = StyleSheet.create({
     calorias: {
         fontSize: 18,
         fontWeight: 'bold',
+        marginRight: 10,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
 });
 

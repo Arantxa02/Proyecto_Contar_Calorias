@@ -1,8 +1,9 @@
-import { Text, SafeAreaView, StyleSheet, View } from 'react-native';
+import { Text, SafeAreaView, StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Button } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
+import TodayCalories from '../../components/TodayCalories/TodayCalories';
 import Header from '../../components/Header/Header';
 import useFoodStorage from '../../hooks/useFoodStorage';
 import { useCallback, useState } from 'react';
@@ -32,48 +33,45 @@ const Home = () => {
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <Header />
-      <View style={styles.caloriasContainer}>
-        <View style={styles.leftContainer}>
-          <Text style={styles.caloriasText}>Calorías</Text>
+      <TouchableOpacity style={styles.caloriasButton} onPress={handleAddCaloriesPress}>
+       <Text style={styles.caloriasText}>Calorías</Text>
+        <View style={styles.buttonIconContainer}>
+          <Icon name="add-circle" size={32} color="black" />
         </View>
-        <View style={styles.rightContainer}>
-          <Button
-            icon={<Icon name="add-circle" size={24} color="black" />}
-            radius="lg"
-            color="#9933FF"
-            onPress={handleAddCaloriesPress}
-          />
-        </View>
-      </View>
+      </TouchableOpacity>
+      <TodayCalories total={''} consumidas={''} restantes={''} porcentage={0} />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  caloriasContainer: {
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignSelf: 'center',
+    width: '100%',
+  },
+  caloriasButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 20,
-    marginTop: 120,
+    padding: 15,
+    marginTop: 125,
+    backgroundColor: "#ad5cff",
+    borderRadius: 30,    
   },
   caloriasText: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
-  },
-  leftContainer: {
+    color: 'black',
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    marginLeft: 10,
   },
-  rightContainer: {
-    flex: 0,
+  buttonIconContainer: {
     width: 60,
-    alignItems: 'flex-end',
+    alignItems: 'center',
     justifyContent: 'center',
   },
 });

@@ -1,4 +1,4 @@
-import react from 'react'
+import React from 'react'
 import { View, StyleSheet, Text, Image } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '@rneui/themed'
@@ -16,12 +16,14 @@ const Header = () => {
     <View style={styles.container}>
       {canGoBack() ? (
         <View style={styles.arrowContainer}>
-          <Button icon={<Icon name="arrow-back" size={25} />}
-            radius="lg"
-            color="#9933FF"
-            onPress={() => goBack()}
-            containerStyle={{ padding: 10, borderRadius: 20 }}
-          />
+          <View style={styles.buttonCircle}>
+            <Button icon={<Icon name="arrow-back" size={20} />}
+              radius="lg"
+              color="#ad5cff"
+              onPress={() => goBack()}
+              containerStyle={{ padding: 10 }}
+            />
+          </View>
         </View>
       ) : undefined}
       <View style={styles.rightContainer}>
@@ -32,10 +34,9 @@ const Header = () => {
         <Text style={styles.subtitle}>Bienvenida de nuevo!</Text>
       </View>
     </View>
-
-
   )
 }
+
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
@@ -76,9 +77,15 @@ const styles = StyleSheet.create({
   arrowContainer: {
     flex: 0,
     width: 65,
+    borderRadius: 20,
     alignItems: 'flex-end',
-
-
+    justifyContent: 'center',
+    marginTop: -5,
+  },
+  buttonCircle: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
   },
 });
 

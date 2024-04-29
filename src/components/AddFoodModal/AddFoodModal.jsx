@@ -1,9 +1,10 @@
 import React, { FC, useState, useEffect } from 'react';
-import { Modal, View, StyleSheet, Text, } from 'react-native';
+import { Modal, View, StyleSheet, Text, Alert } from 'react-native';
 import { Button } from '@rneui/themed';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Input } from 'react-native-elements';
-import useFoodStorage from '../../hooks/useFoodStorage';
+
+import useFoodStorage from '../../hooks/useFoodStorage'
 
 type AddFoodModalProps = {
   onClose: (shouldUpdate?: boolean) => void,
@@ -23,22 +24,34 @@ const AddFoodModal: FC<AddFoodModalProps> = ({ onClose, visible }) => {
   }, [visible]);
 
   const handleAddPress = async () => {
-    try {
-      await onSaveFood({
-        calorias,
-        nombre,
-        gramos,
-      });
+  if (calorias.trim() === '' || nombre.trim() === '' || gramos.trim() === '') {
+    return;
+  }
 
-      onClose(true);
-    } catch (error) {
-      console.error(error);
-    }
-    onClose();
-  };
+  try {
+    await onSaveFood({
+      calorias,
+      nombre,
+      gramos,
+    });
 
+    Alert.alert('Alimento añadido','La comida ha sido añadida correctamente.',
+      [{
+          text: 'OK',
+          onPress: onClose,
+        },
+      ],
+      { cancelable: false }
+    );
+
+    onClose(true);
+  } catch (error) {
+    console.error(error);
+  }
+};
+  
   return (
-    <Modal visible={visible} onRequestClose={() => onClose()} transparent>
+    <Modal visible={visible} onRequestClose={onClose} transparent>
       <View style={styles.container}>
         <View style={styles.content}>
           <View style={styles.closeContainer}>
@@ -55,7 +68,7 @@ const AddFoodModal: FC<AddFoodModalProps> = ({ onClose, visible }) => {
             <View style={styles.inputContainer}>
               <Input
                 value={nombre}
-                onChangeText={(text: string) => setName(text)}
+                onChangeText={(text) => setName(text)}
               />
             </View>
           </View>
@@ -66,7 +79,7 @@ const AddFoodModal: FC<AddFoodModalProps> = ({ onClose, visible }) => {
             <View style={styles.inputContainer}>
               <Input
                 value={calorias}
-                onChangeText={(text: string) => setCalories(text)}
+                onChangeText={(text) => setCalories(text)}
               />
             </View>
           </View>
@@ -77,7 +90,7 @@ const AddFoodModal: FC<AddFoodModalProps> = ({ onClose, visible }) => {
             <View style={styles.inputContainer}>
               <Input
                 value={gramos}
-                onChangeText={(text: string) => setPortion(text)}
+                onChangeText={(text) => setPortion(text)}
               />
             </View>
           </View>
@@ -89,7 +102,11 @@ const AddFoodModal: FC<AddFoodModalProps> = ({ onClose, visible }) => {
                 radius="lg"
                 color="#9933FF"
                 onPress={handleAddPress}
-                disabled={calorias.trim() === '' || nombre.trim() === '' || gramos.trim() === ''}
+                disabled={
+                  calorias.trim() === '' ||
+                  nombre.trim() === '' ||
+                  gramos.trim() === ''
+                }
               />
             </View>
           </View>
