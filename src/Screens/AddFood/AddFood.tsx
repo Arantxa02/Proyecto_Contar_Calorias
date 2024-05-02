@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Alert, ScrollView, TouchableOpacity } from 'react-native';
 import { Button, Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
-import { Input } from 'react-native-elements'
+import { Input } from 'react-native-elements';
 import { useState } from 'react';
 
 
@@ -25,7 +25,7 @@ const AddFood = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
     loadFoods().catch(null);
@@ -40,33 +40,41 @@ const AddFood = () => {
 
 
   const handleSearchPress = async () => {
-  if (!search) {
+    if (!search) {
     Alert.alert('Error', 'Por favor, introduce texto en el campo de búsqueda.');
-    return;
-  }
+      return;
+    }
+  
+    try {
+      const result = await onGetFood();
+      const filteredFoods = result.filter((item: Meal) =>
+        item.nombre.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+      );
+      setFoods(filteredFoods);
+      if (filteredFoods.length === 0) {
+        Alert.alert('No se encontró ninguna comida','Por favor, añade la comida que buscas.'
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      setFoods([]);
+    }
+  };
 
-  try {
-    const result = await onGetFood();
-    setFoods(result.filter((item: Meal) => item.nombre.toLocaleLowerCase().includes(search.toLocaleLowerCase()),
-    ));
-  } catch (error) {
-    console.error(error);
-    setFoods([]);
-  }
-};
-
-const handleSearchChange = (text: string) => {
-  setSearch(text);
-  if (!text) {
-    loadFoods();
-  }
-};
+  const handleSearchChange = (text: string) => {
+    setSearch(text);
+    if (!text) {
+      loadFoods();
+    }
+  };
 
   return (
     <View style={styles.container}>
       <Header />
-      <TouchableOpacity style={styles.addFood} onPress={() => setIsVisible(true)}>
-       <Text style={styles.addFoodLegend}>Añadir comida</Text>
+      <TouchableOpacity
+        style={styles.addFood}
+        onPress={() => setIsVisible(true)}>
+        <Text style={styles.addFoodLegend}>Añadir comida</Text>
         <View style={styles.addFoodBtnContainer}>
           <Icon name="add-circle" size={32} color="black" />
         </View>
@@ -74,10 +82,10 @@ const handleSearchChange = (text: string) => {
       <View style={styles.searchContainer}>
         <View style={styles.inputContainer}>
           <Input
-            placeholder='manzana, carne, zumo...'
+            placeholder="manzana, carne, zumo..."
             value={search}
             onChangeText={handleSearchChange}
-            />
+          />
         </View>
         <Button
           containerStyle={styles.searchButtonContainer}
@@ -88,7 +96,9 @@ const handleSearchChange = (text: string) => {
         />
       </View>
       <ScrollView style={styles.content}>
-        {foods?.map(meal => <MealItem key={`my-meal-item-${meal.name}`} {...meal} />)}
+        {foods?.map((meal) => (
+          <MealItem key={`my-meal-item-${meal.name}`} {...meal} isAbleToAdd />
+        ))}
       </ScrollView>
       <AddFoodModal visible={visible} onClose={handleModalClose} />
     </View>
@@ -102,7 +112,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   content: {
-
+    
   },
   addFoodBtnContainer: {
     width: 60,
@@ -115,7 +125,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 12,
     marginTop: 125,
-    backgroundColor: "#ad5cff",
+    backgroundColor: '#ad5cff',
     borderRadius: 30,
   },
   addFoodLegend: {
