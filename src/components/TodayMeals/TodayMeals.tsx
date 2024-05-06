@@ -19,7 +19,7 @@ const TodayMeals: FC<TodayMealsProps> = ({ foods, onCompleteAddRemove }) => {
                 isAbleToAdd={false} key={`today-meal-item-${meal.nombre}-${index}`}
                 {...meal}
                 onCompleteAddRemove={onCompleteAddRemove}
-                itemPosition={index}          />
+                itemPosition={index} />
         ))}
       </ScrollView>
     </View>
