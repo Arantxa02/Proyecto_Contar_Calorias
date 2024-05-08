@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Feather } from '@expo/vector-icons';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth'; // Importa esta función para crear cuentas
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from '../../../firebase-config';
 
 const Signup = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -12,34 +16,37 @@ const Signup = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     if (!email || !password || !confirmPassword || !firstName || !lastName) {
       Alert.alert('Campos Incompletos', 'Por favor completa todos los campos');
     } else if (password !== confirmPassword) {
       Alert.alert('Contraseñas no coinciden', 'Por favor verifica que las contraseñas coincidan');
     } else {
-      // Lógica para crear una cuenta
-      // Aquí iría la lógica para crear la cuenta
-
-      Alert.alert(
-        'Cuenta Creada',
-        '¡Tu cuenta ha sido creada exitosamente!',
-        [
-          {
-            text: 'OK',
-            onPress: () => {
-              navigation.navigate('Login'); // Navegar a la pantalla de inicio de sesión
-              // Limpiar los campos después de la creación exitosa de la cuenta
-              setEmail('');
-              setPassword('');
-              setConfirmPassword('');
-              setFirstName('');
-              setLastName('');
+      const auth = getAuth();
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        // La cuenta fue creada exitosamente
+        Alert.alert(
+          'Cuenta Creada',
+          '¡Tu cuenta ha sido creada exitosamente!',
+          [
+            {
+              text: 'OK',
+              onPress: () => {
+                navigation.navigate('Login');
+                setEmail('');
+                setPassword('');
+                setConfirmPassword('');
+                setFirstName('');
+                setLastName('');
+              },
             },
-          },
-        ],
-        { cancelable: false }
-      );
+          ],
+          { cancelable: false }
+        );
+      } catch (error) {
+        Alert.alert('Error al crear la cuenta', error.message);
+      }
     }
   };
 

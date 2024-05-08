@@ -1,26 +1,29 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Feather } from '@expo/vector-icons'; // Importar Feather para el icono del ojo
+import { Feather } from '@expo/vector-icons';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth'; // Importa esta función para crear cuentas
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from '../../../firebase-config';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false); // Estado para controlar la visibilidad de la contraseña
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert(
-        'Campos Incompletos',
-        'Por favor introduce sus datos.',
-        [{ text: 'OK' }]
-      );
+      Alert.alert('Campos Incompletos', 'Por favor introduce tus datos.');
     } else {
-      // Lógica para iniciar sesión
-      // Aquí podrías hacer una llamada a una API, autenticar al usuario, etc.
-      
-      // Una vez que la lógica de inicio de sesión ha tenido éxito:
-      navigation.navigate('Home'); // Esto llevará al usuario a la pantalla Home
+      const auth = getAuth();
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        // El inicio de sesión fue exitoso
+        navigation.navigate('Home');
+      } catch (error) {
+        Alert.alert('Error de inicio de sesión', error.message);
+      }
     }
   };
 
