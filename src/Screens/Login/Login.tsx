@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons'; 
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../../../firebase-config';
@@ -12,25 +12,26 @@ const Login = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
-    if (!email || !password) {
-      Alert.alert('Campos Incompletos', 'Por favor introduce tus datos.');
+    if (!email || !password) {            
+       //Validación de los campos vacíos                                    
+      Alert.alert('Campos Incompletos', 'Por favor introduce tus datos.');   
     } else {
       const auth = getAuth();
       try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        // Restablecer los campos de entrada
+        // Restablecer los campos de entrada después del inicio de sesion exitoso
         setEmail('');
         setPassword('');
         setShowPassword(false);
-        navigation.navigate('Home');
+        navigation.navigate('Home');  //Redirrecionar a la pantalla home
       } catch (error) {
-        Alert.alert('Error de inicio de sesión', error.message);
+        Alert.alert('Error de inicio de sesión', error.message);  //Alerta de error de inicio de sesion
       }
     }
   };
 
   useEffect(() => {
-    // Limpiar los campos cuando el componente se desmonte
+    // Limpiar los campos 
     return () => {
       setEmail('');
       setPassword('');
@@ -72,14 +73,14 @@ const Login = ({ navigation }) => {
             placeholderTextColor="#ccc"
           />
           <TouchableOpacity style={styles.eyeIcon} onPress={() => setShowPassword(!showPassword)}>
-            <Feather name={showPassword ? "eye" : "eye-off"} size={24} color="#8A2BE2" />
+            <Feather name={showPassword ? "eye" : "eye-off"} size={24} color="#8A2BE2" />  //Icono del ojo para mostrar la contraseña
           </TouchableOpacity>
         </View>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={handleLogin}
+          onPress={handleLogin}  //Manejador de inicio de sesión
         >
           <Text style={styles.buttonText}>Iniciar Sesión</Text>
         </TouchableOpacity>

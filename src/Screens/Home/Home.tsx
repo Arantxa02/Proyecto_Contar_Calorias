@@ -10,11 +10,11 @@ import useFoodStorage from '../../hooks/useFoodStorage';
 import { useCallback, useState } from 'react';
 import { Meal } from '../../types';
 
-const totalCaloriesPerDay = 2000;
+const totalCaloriesPerDay = 2000;   //Definición del total de calorias por dia 
 
 const Home = () => {
-  const [todayFood, setTodayFood] = useState([]);
-  const [todayStatistics, setTodayStatistics] = useState({
+  const [todayFood, setTodayFood] = useState([]);  //Estado para almacenar la comida de hoy
+  const [todayStatistics, setTodayStatistics] = useState({ //Estado para almacenar estadísticas de hoy
     ingeridas: 0,
     porcentage: 0,
     restantes: 0,
@@ -24,6 +24,8 @@ const Home = () => {
   const { onGetTodayFood } = useFoodStorage();
   const { navigate } = useNavigation();
 
+
+//Función para calcular las estadisticas de hoy en base a las comidas
   const calculatedTodayStatistics = (meals: Meal[]) => {
     try {
       const calorisConsumed = meals.reduce(
@@ -44,6 +46,8 @@ const Home = () => {
     }
   };
 
+
+//Carga las comidas de hoy al pulsar en el componente
   const loadTodayFood = useCallback(async () => {
     try {
       const todayFoodResponse = await onGetTodayFood();
@@ -55,13 +59,14 @@ const Home = () => {
     }
   }, []);
 
+  //Usa el hook useFocusEffect para cargar las comidas de hoy cuando el componente está enfocado
   useFocusEffect(useCallback(() => {
     loadTodayFood().catch(null);
   }, [loadTodayFood]));
 
-
+//Manejador de eventos para añadir las calorias
   const handleAddCaloriesPress = () => {
-    navigate('AddFood');
+    navigate('AddFood');   //Navega a la pantalla AddFood para agregar comida
   };
 
   return (
@@ -77,7 +82,7 @@ const Home = () => {
       </TouchableOpacity>
       <TodayCalories {...todayStatistics} />
       <TodayMeals
-        foods={todayFood}
+        foods={todayFood}   //Pasa las comidas de hoy al componente TodayMeals
         onCompleteAddRemove={() => loadTodayFood()}
       />
     </SafeAreaView>

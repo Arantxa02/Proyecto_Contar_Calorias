@@ -5,7 +5,7 @@ import { Feather } from '@expo/vector-icons';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { createUserWithEmailAndPassword } from 'firebase/auth'; // Importa esta función para crear cuentas
 import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from '../../../firebase-config';
+import { firebaseConfig } from '../../../firebase-config'; //Configuración de Firebase
 
 const Signup = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -16,16 +16,20 @@ const Signup = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+
+  //Función para manejar el registro de ususario
   const handleSignup = async () => {
     if (!email || !password || !confirmPassword || !firstName || !lastName) {
+      //Validacion de campos vacios
       Alert.alert('Campos Incompletos', 'Por favor completa todos los campos');
     } else if (password !== confirmPassword) {
+      //validacion de contraseñas coincidentes
       Alert.alert('Contraseñas no coinciden', 'Por favor verifica que las contraseñas coincidan');
     } else {
       const auth = getAuth();
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        // La cuenta fue creada exitosamente
+        // Alerta de que laa cuenta fue creada exitosamente
         Alert.alert(
           'Cuenta Creada',
           '¡Tu cuenta ha sido creada exitosamente!',
@@ -33,7 +37,8 @@ const Signup = ({ navigation }) => {
             {
               text: 'OK',
               onPress: () => {
-                navigation.navigate('Login');
+                navigation.navigate('Login');  //Redireccionar a la pantalla de inicio de sesión
+                //Restablecer los campos después del registro exitoso
                 setEmail('');
                 setPassword('');
                 setConfirmPassword('');
@@ -120,7 +125,7 @@ const Signup = ({ navigation }) => {
             placeholder="Confirmar Contraseña"
             value={confirmPassword}
             onChangeText={setConfirmPassword}
-            secureTextEntry={!showConfirmPassword} // Usar el estado para mostrar u ocultar la contraseña
+            secureTextEntry={!showConfirmPassword} 
             placeholderTextColor="#ccc"
           />
           <TouchableOpacity style={styles.eyeIcon} onPress={() => setShowConfirmPassword(!showConfirmPassword)}>
@@ -131,7 +136,7 @@ const Signup = ({ navigation }) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={handleSignup}
+          onPress={handleSignup} //Manejador de registro de usuario
         >
           <Text style={styles.buttonText}>Crear Cuenta</Text>
         </TouchableOpacity>

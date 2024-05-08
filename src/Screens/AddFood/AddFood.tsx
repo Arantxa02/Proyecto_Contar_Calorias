@@ -13,11 +13,13 @@ import MealItem from '../../components/MealItem/MealItem';
 import { Meal } from '../../types/index';
 
 const AddFood = () => {
-  const [visible, setIsVisible] = useState(false);
-  const [foods, setFoods] = useState([]);
-  const { onGetFood } = useFoodStorage();
-  const [search, setSearch] = useState('');
+  const [visible, setIsVisible] = useState(false);   //Estado para controlar la visibilidad del modal
+  const [foods, setFoods] = useState([]);  //Estado para almacenar la comida
+  const { onGetFood } = useFoodStorage();  //hook personalizado para obtener las comidas
+  const [search, setSearch] = useState('');  //Estado para almacenar el texto de busqueda
 
+
+  //Función para cargar las comidas
   const loadFoods = async () => {
     try {
       const foodsResponse = await onGetFood();
@@ -31,6 +33,7 @@ const AddFood = () => {
     loadFoods().catch(null);
   }, []);
 
+  //Controlador para cerrar el modal
   const handleModalClose = async (shouldUpdate?: boolean) => {
     if (shouldUpdate) {
       loadFoods();
@@ -38,7 +41,7 @@ const AddFood = () => {
     setIsVisible(false);
   };
 
-
+//Controlador para realizar la busqueda
   const handleSearchPress = async () => {
     if (!search) {
     Alert.alert('Error', 'Por favor, introduce texto en el campo de búsqueda.');
@@ -61,6 +64,7 @@ const AddFood = () => {
     }
   };
 
+  //Controlador de evento para cambiar el texto de busqueda 
   const handleSearchChange = (text: string) => {
     setSearch(text);
     if (!text) {
@@ -70,13 +74,13 @@ const AddFood = () => {
 
   return (
     <View style={styles.container}>
-      <Header />
+      <Header />                       //Carga el componente Header
       <TouchableOpacity
         style={styles.addFood}
         onPress={() => setIsVisible(true)}>
-        <Text style={styles.addFoodLegend}>Añadir comida</Text>
+        <Text style={styles.addFoodLegend}>Añadir comida</Text>  //Texto del boton
         <View style={styles.addFoodBtnContainer}>
-          <Icon name="add-circle" size={32} color="black" />
+          <Icon name="add-circle" size={32} color="black" />  //Icono del boton
         </View>
       </TouchableOpacity>
       <View style={styles.searchContainer}>
@@ -100,7 +104,7 @@ const AddFood = () => {
           <MealItem key={`my-meal-item-${meal.name}`} {...meal} isAbleToAdd />
         ))}
       </ScrollView>
-      <AddFoodModal visible={visible} onClose={handleModalClose} />
+      <AddFoodModal visible={visible} onClose={handleModalClose} />  //Renderiza el modal de añadir comida
     </View>
   );
 };
