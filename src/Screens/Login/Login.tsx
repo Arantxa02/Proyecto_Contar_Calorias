@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Feather } from '@expo/vector-icons';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { createUserWithEmailAndPassword } from 'firebase/auth'; // Importa esta función para crear cuentas
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../../../firebase-config';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // Estado para controlar la visibilidad de la contraseña
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -19,13 +18,25 @@ const Login = ({ navigation }) => {
       const auth = getAuth();
       try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        // El inicio de sesión fue exitoso
+        // Restablecer los campos de entrada
+        setEmail('');
+        setPassword('');
+        setShowPassword(false);
         navigation.navigate('Home');
       } catch (error) {
         Alert.alert('Error de inicio de sesión', error.message);
       }
     }
   };
+
+  useEffect(() => {
+    // Limpiar los campos cuando el componente se desmonte
+    return () => {
+      setEmail('');
+      setPassword('');
+      setShowPassword(false);
+    };
+  }, []);
 
   const staticInfo = {
     uri: 'https://tint.creativemarket.com/p8pw0iE3LxNGaOT7Go0jb8-zvjf27VWTPrxViSH1iyY/width:1200/height:800/gravity:nowe/rt:fill-down/el:1/czM6Ly9maWxlcy5jcmVhdGl2ZW1hcmtldC5jb20vaW1hZ2VzL3NjcmVlbnNob3RzL3Byb2R1Y3RzLzkxMS85MTE3LzkxMTc0NDIvMjAtMDgtMTEtbnV0cml0aW9uLWZhY3RzLWxhYmVsLWNvbG9yLSUyODElMjktby5qcGc?1601027502&fmt=webp',
@@ -57,7 +68,7 @@ const Login = ({ navigation }) => {
             placeholder="Contraseña"
             value={password}
             onChangeText={setPassword}
-            secureTextEntry={!showPassword} // Usar el estado para mostrar u ocultar la contraseña
+            secureTextEntry={!showPassword}
             placeholderTextColor="#ccc"
           />
           <TouchableOpacity style={styles.eyeIcon} onPress={() => setShowPassword(!showPassword)}>
@@ -104,7 +115,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '80%',
-    marginTop: 40, // Ajustar el margen superior para que los botones aparezcan más abajo
+    marginTop: 40,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
