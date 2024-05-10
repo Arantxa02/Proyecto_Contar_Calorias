@@ -45,7 +45,7 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.welcomeText}>Bienvenido a nuestra aplicación!</Text>
+      <Text style={styles.welcomeText}>Bienvenido!</Text>
       <Image source={{uri: staticInfo.uri}} style={styles.profileImage} resizeMode="stretch"/>
       <View style={styles.inputContainer}>
         <View style={styles.iconInput}>
