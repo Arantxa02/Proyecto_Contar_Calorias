@@ -74,13 +74,13 @@ const AddFood = () => {
 
   return (
     <View style={styles.container}>
-      <Header />                       //Carga el componente Header
+      <Header />                      
       <TouchableOpacity
         style={styles.addFood}
         onPress={() => setIsVisible(true)}>
-        <Text style={styles.addFoodLegend}>Añadir comida</Text>  //Texto del boton
+        <Text style={styles.addFoodLegend}>Añadir comida</Text>  
         <View style={styles.addFoodBtnContainer}>
-          <Icon name="add-circle" size={32} color="black" />  //Icono del boton
+          <Icon name="add-circle" size={32} color="black" />  
         </View>
       </TouchableOpacity>
       <View style={styles.searchContainer}>
@@ -104,7 +104,7 @@ const AddFood = () => {
           <MealItem key={`my-meal-item-${meal.name}`} {...meal} isAbleToAdd />
         ))}
       </ScrollView>
-      <AddFoodModal visible={visible} onClose={handleModalClose} />  //Renderiza el modal de añadir comida
+      <AddFoodModal visible={visible} onClose={handleModalClose} />  
     </View>
   );
 };

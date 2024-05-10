@@ -26,13 +26,14 @@ const Home = () => {
 
 
 //Función para calcular las estadisticas de hoy en base a las comidas
-  const calculatedTodayStatistics = (meals: Meal[]) => {
-    try {
+const calculatedTodayStatistics = (meals: Meal[]) => {
+  try {
+    if (meals && meals.length > 0) {
       const calorisConsumed = meals.reduce(
         (acum, curr) => acum + Number(curr.calorias),
         0
       );
-      const remainingCalories = 2000 - calorisConsumed;
+      const remainingCalories = totalCaloriesPerDay - calorisConsumed;
       const porcentage = (calorisConsumed / totalCaloriesPerDay) * 100;
 
       setTodayStatistics({
@@ -41,10 +42,19 @@ const Home = () => {
         restantes: remainingCalories,
         total: totalCaloriesPerDay,
       });
-    } catch (error) {
-      console.error(error);
+    } else {
+      // Si no hay comidas para el día o si meals es undefined, reinicia las estadísticas
+      setTodayStatistics({
+        ingeridas: 0,
+        porcentage: 0,
+        restantes: totalCaloriesPerDay,
+        total: totalCaloriesPerDay,
+      });
     }
-  };
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 
 //Carga las comidas de hoy al pulsar en el componente

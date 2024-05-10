@@ -73,7 +73,7 @@ const Login = ({ navigation }) => {
             placeholderTextColor="#ccc"
           />
           <TouchableOpacity style={styles.eyeIcon} onPress={() => setShowPassword(!showPassword)}>
-            <Feather name={showPassword ? "eye" : "eye-off"} size={24} color="#8A2BE2" />  //Icono del ojo para mostrar la contraseña
+            <Feather name={showPassword ? "eye" : "eye-off"} size={24} color="#8A2BE2" />  
           </TouchableOpacity>
         </View>
       </View>
