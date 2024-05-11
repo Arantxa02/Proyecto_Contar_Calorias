@@ -43,13 +43,14 @@ const useFoodStorage = () => {
         }
     };
 
-    const handleGetFood = async () => {        //Metodo para obtener la información de la comida
+    const handleGetFood = async () => {                //Metodo para obtener la comida
         try {
             const foods = await AsyncStorage.getItem(MY_FOOD_KEY);
             if (foods !== null) {
-                const parseFoods = JSON.parse(foods);
-                return Promise.resolve(parseFoods);
+                const parsedFoods = JSON.parse(foods);
+                return Promise.resolve(parsedFoods);
             }
+            return Promise.resolve([]); // Devuelve un array vacío si no hay datos guardados
         } catch (error) {
             return Promise.reject(error);
         }

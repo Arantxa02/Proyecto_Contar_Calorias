@@ -42,27 +42,31 @@ const AddFood = () => {
   };
 
 //Controlador para realizar la busqueda
-  const handleSearchPress = async () => {
-    if (!search) {
+const handleSearchPress = async () => {
+  if (!search) {
     Alert.alert('Error', 'Por favor, introduce texto en el campo de búsqueda.');
+    return;
+  }
+
+  try {
+    const result = await onGetFood();
+    if (!Array.isArray(result)) {
+      // Manejar el caso donde result no es un array
+      console.error('El resultado de onGetFood() no es un array:', result);
       return;
     }
-  
-    try {
-      const result = await onGetFood();
-      const filteredFoods = result.filter((item: Meal) =>
-        item.nombre.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-      );
-      setFoods(filteredFoods);
-      if (filteredFoods.length === 0) {
-        Alert.alert('No se encontró ninguna comida','Por favor, añade la comida que buscas.'
-        );
-      }
-    } catch (error) {
-      console.error(error);
-      setFoods([]);
+    const filteredFoods = result.filter((item: Meal) =>
+      item.nombre.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+    );
+    setFoods(filteredFoods);
+    if (filteredFoods.length === 0) {
+      Alert.alert('No se encontró ninguna comida', 'Por favor, añade la comida que buscas.');
     }
-  };
+  } catch (error) {
+    console.error(error);
+    setFoods([]);
+  }
+};
 
   //Controlador de evento para cambiar el texto de busqueda 
   const handleSearchChange = (text: string) => {
