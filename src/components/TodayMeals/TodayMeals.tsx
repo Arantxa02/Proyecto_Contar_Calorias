@@ -5,7 +5,7 @@ import MealItem from '../MealItem/MealItem';
 import { Meal } from '../../types/index';
 
 type TodayMealsProps = {
-  foods: Meal[];
+  foods: Meal[];                                 // Lista de comidas consumidas durante el día actual
   onCompleteAddRemove?: () => void;
 };
 

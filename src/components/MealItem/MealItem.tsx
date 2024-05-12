@@ -7,9 +7,9 @@ import useFoodStorage from '../../hooks/useFoodStorage';
 import { Alert } from 'react-native';
 
 type MealItemProps = Meal & {
-  isAbleToAdd: boolean;
+  isAbleToAdd: boolean;                    // Indica si el elemento se puede agregar o no
   onCompleteAddRemove?: () => void;
-  itemPosition?: number;
+  itemPosition?: number;                    // Posición del elemento en la lista, opcional
 };
 
 const MealItem: FC<MealItemProps> = ({
@@ -24,7 +24,7 @@ const MealItem: FC<MealItemProps> = ({
 
   const handleIconPress = async () => {
     try {
-      if (isAbleToAdd) {
+      if (isAbleToAdd) {                 // Si se puede agregar, guarda el alimento del día
         await onSaveTodayFood({
           nombre,
           calorias,
@@ -33,13 +33,13 @@ const MealItem: FC<MealItemProps> = ({
         Alert.alert(
           `"${nombre}" se añadio correctamente con ${calorias}Kcal y ${gramos}gr.`
         );
-      } else {
-        await onDeleteTodayFood(itemPosition ?? -1);
+      } else {                                                 // Si no se puede agregar, elimina el alimento del día
+        await onDeleteTodayFood(itemPosition ?? -1);            // Elimina el alimento del día en la posición proporcionada, o -1 si no se proporciona
         Alert.alert(`"${nombre}" se elimino correctamente.`);
       }
       onCompleteAddRemove?.();
     } catch (error) {
-      console.error(error);
+      console.error(error);                                       // Manejo de errores
       Alert.alert('Comida del día no agregada. Por favor, inténtalo de nuevo.');
     }
   };

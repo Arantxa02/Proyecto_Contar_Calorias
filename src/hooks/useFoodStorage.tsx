@@ -3,24 +3,26 @@ import { Meal } from "../types"
 import { createSolutionBuilderWithWatchHost } from "typescript";
 import {isToday} from 'date-fns';
 
+//Claves de Almacenamientos para los datos de alimentos
 const MY_FOOD_KEY = '@MyFood:Key';
 const MY_TODAY_FOOD_KEY = '@MyTodayFood:Key';
 
 const useFoodStorage = () => {
+    //Funcion interna para guardar la informacion en Ayncstorage
     const saveInfoToStorage = async (storageKey: string, meal: Meal) => {
-        try {
+        try {  // Obtiene los datos actuales del almacenamiento
             const currentSavedFood = await AsyncStorage.getItem(storageKey);
 
-            if (currentSavedFood !== null) {
+            if (currentSavedFood !== null) {                    // Si hay datos existentes, los parsea y añade la nueva comida
                 const currentSavedFoodParsed = JSON.parse(currentSavedFood);
                 currentSavedFoodParsed.push(meal);
 
-                await AsyncStorage.setItem(storageKey, JSON.stringify(currentSavedFoodParsed));
-
+                await AsyncStorage.setItem(storageKey, JSON.stringify(currentSavedFoodParsed));                  // Guarda los datos actualizados en AsyncStorage
+ 
                 return Promise.resolve();
             }
 
-            await AsyncStorage.setItem(
+            await AsyncStorage.setItem(                // Si no hay datos existentes, guarda la nueva comida en un array
                 storageKey,
                 JSON.stringify([  
                     meal,

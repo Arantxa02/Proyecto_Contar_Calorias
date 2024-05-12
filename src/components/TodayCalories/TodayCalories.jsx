@@ -3,14 +3,14 @@ import { View, Text, StyleSheet } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle'
 
 type TodayCaloriesProps = {
-  total: number | string;
-  ingeridas: number | string;
-  restantes: number | string;
-  porcentage: number;
+  total: number | string;                          // Total de calorías permitidas para el día
+  ingeridas: number | string;                      // Calorías consumidas hasta el momento
+  restantes: number | string;                      // Calorías restantes para alcanzar el total permitido
+  porcentage: number;                              // Porcentaje de calorías consumidas con respecto al total permitido
 }
 
 const TodayCalories: FC<TodayCaloriesProps> = ({
-  total= 2000,
+  total= 2000,                                       // Valor predeterminado para el total de calorías
   ingeridas= 0,
   restantes= 0,
   porcentage= 0,

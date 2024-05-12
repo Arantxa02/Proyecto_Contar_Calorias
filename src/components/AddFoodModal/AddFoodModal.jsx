@@ -6,25 +6,28 @@ import { Input } from 'react-native-elements';
 
 import useFoodStorage from '../../hooks/useFoodStorage'
 
-type AddFoodModalProps = {
-  onClose: (shouldUpdate?: boolean) => void,
-  visible: boolean,
+type AddFoodModalProps = { 
+  onClose: (shouldUpdate?: boolean) => void,   //Prop para cerrar el modal
+  visible: boolean,                            // Prop que indica si el modal esta visible o no 
 };
 
 const AddFoodModal: FC<AddFoodModalProps> = ({ onClose, visible }) => {
+  //Estados para almacenar
   const [calorias, setCalories] = useState('');
   const [nombre, setName] = useState('');
   const [gramos, setPortion] = useState('');
   const { onSaveFood } = useFoodStorage();
 
+  //Limpiar modal restablece el modal con los campos vacios
   useEffect(() => {
     setCalories('');
     setName('');
     setPortion('');
   }, [visible]);
 
-  const handleAddPress = async () => {
-  if (calorias.trim() === '' || nombre.trim() === '' || gramos.trim() === '') {
+//Funcion para manejar el evento de agregar alimento
+  const handleAddPress = async () => {     
+  if (calorias.trim() === '' || nombre.trim() === '' || gramos.trim() === '') {    // Verifica si algun campo esta vacio
     return;
   }
 
